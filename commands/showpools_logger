@@ -1,0 +1,49 @@
+#!/bin/bash
+
+usage()
+{
+  echo "Usage: $0 [ -i INVERVAL(sec) ] [ -o OUTPUT_FILE ]"
+  exit 2
+}
+
+set_variable()
+{
+  local varname=$1
+  shift
+  if [ -z "${!varname}" ]; then
+    eval "$varname=\"$@\""
+  else
+    echo "Error: $varname already set"
+    usage
+  fi
+}
+
+show_pools()
+{
+  local logfile=$1
+  showpools | tee -a $logfile
+}
+
+
+#########################
+# Main script starts here
+
+unset OUTPUT_FILE
+INTERVAL=60
+
+while getopts 'i:o:?h' c
+do
+  case $c in
+    i) set_variable INTERVAL $OPTARG ;;
+    o) set_variable OUTPUT_FILE $OPTARG ;;
+    h|?) usage ;; esac
+done
+
+[ -z "$OUTPUT_FILE" ] && [ -z "$INVERVAL" ] && usage
+
+while true
+do
+  show_pools $OUTPUT_FILE
+  sleep $INTERVAL
+done
+

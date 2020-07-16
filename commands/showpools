@@ -1,0 +1,4 @@
+#!/bin/bash
+
+PAGER=cat psql -c "SHOW POOLS;" --tuples-only --field-separator=, -A
+

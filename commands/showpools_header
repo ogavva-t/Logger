@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "database,user,cl_active,cl_waiting,sv_active,sv_idle,sv_used,sv_tested,sv_login,maxwait,maxwait_us,pool_mode"
