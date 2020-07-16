@@ -29,7 +29,6 @@ show_pools()
 # Main script starts here
 
 unset OUTPUT_FILE
-INTERVAL=60
 
 while getopts 'i:o:?h' c
 do
