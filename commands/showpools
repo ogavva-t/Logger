@@ -1,5 +1,6 @@
 #!/bin/bash
 
 RESULT=`PAGER=cat psql -c "SHOW POOLS;" --tuples-only --field-separator=, -A`
-printf "`date +"%d/%b/%Y:%H:%M:%S %Z"`,$RESULT\n"
+#printf "`date +"%d/%b/%Y:%H:%M:%S %Z"`,$RESULT\n"
+printf "`date +"%Y-%m-%d %H:%M:%S"`,$RESULT\n"
 
