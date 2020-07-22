@@ -2,7 +2,7 @@
 
 usage()
 {
-  echo "Usage: $0 [ -i INVERVAL(sec) ] [ -o OUTPUT_FILE ]"
+  echo "Usage: $0 [ -h HOST:PORT:PASSWORD ] [ -i INVERVAL(sec) ] [ -o OUTPUT_FILE ]"
   exit 2
 }
 
@@ -30,19 +30,23 @@ show_pools()
 
 unset OUTPUT_FILE
 
-while getopts 'i:o:?h' c
+while getopts 'h:i:o:?' c
 do
   case $c in
+    h) set_variable HOST $OPTARG ;;
     i) set_variable INTERVAL $OPTARG ;;
     o) set_variable OUTPUT_FILE $OPTARG ;;
-    h|?) usage ;; esac
+    ?) usage ;; esac
 done
 
-[ -z "$OUTPUT_FILE" ] && [ -z "$INVERVAL" ] && usage
+[ -z "$HOST" ] && [ -z "$OUTPUT_FILE" ] && [ -z "$INVERVAL" ] && usage
 
 while true
 do
-  show_pools | tee -a $OUTPUT_FILE
+  RESULT=`fsesexe -h $HOST -x "show calls count" | grep total. | cut -d ' ' -f 1`
+  printf "`date +"%Y-%m-%d %H:%M:%S"`,$RESULT\n" | tee -a $OUTPUT_FILE
   sleep $INTERVAL
 done
+
+
 
