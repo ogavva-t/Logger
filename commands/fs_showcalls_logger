@@ -28,22 +28,24 @@ show_pools()
 #########################
 # Main script starts here
 
-unset OUTPUT_FILE
+HOSTS=FS_SHOWCALLS_HOSTS
+OUTPUT_FILE=FS_SHOWCALLS_OUTPUT_FILE
+INTERVAL=FS_SHOWCALLS_INTERVAL
 
 while getopts 'h:i:o:?' c
 do
   case $c in
-    h) set_variable HOST $OPTARG ;;
+    h) set_variable HOSTS $OPTARG ;;
     i) set_variable INTERVAL $OPTARG ;;
     o) set_variable OUTPUT_FILE $OPTARG ;;
     ?) usage ;; esac
 done
 
-[ -z "$HOST" ] && [ -z "$OUTPUT_FILE" ] && [ -z "$INVERVAL" ] && usage
+[ -z "$HOSTS" ] && [ -z "$OUTPUT_FILE" ] && [ -z "$INVERVAL" ] && usage
 
 while true
 do
-  RESULT=`fsesexe -h $HOST -x "show calls count" | grep total. | cut -d ' ' -f 1`
+  RESULT=`fsesexe -h $HOSTS -x "show calls count" | grep total. | cut -d ' ' -f 1`
   printf "`date +"%Y-%m-%d %H:%M:%S"`,$RESULT\n" | tee -a $OUTPUT_FILE
   sleep $INTERVAL
 done

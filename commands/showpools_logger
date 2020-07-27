@@ -28,7 +28,10 @@ show_pools()
 #########################
 # Main script starts here
 
-unset OUTPUT_FILE
+OUTPUT_FILE=SHOWPOOLS_OUTPUT_FILE
+INTERVAL=SHOWPOOLS_INTERVAL
+
+
 
 while getopts 'i:o:?h' c
 do
