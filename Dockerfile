@@ -22,7 +22,11 @@ RUN ls -l /opt/fsesexe
 RUN chmod +x /opt/fsesexe/fsesexe
 RUN ln -s /opt/fsesexe/fsesexe /usr/bin/fsesexe 
 
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
 
-ENTRYPOINT [ "/usr/bin/entrypoint.sh" ]
+RUN mkdir -p /var/log/logger/pgbouncer
+
+# Configure supervisord
+RUN apt-get install -y supervisor
+COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
