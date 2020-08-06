@@ -18,19 +18,12 @@ set_variable()
   fi
 }
 
-show_pools()
-{
-  local logfile=$1
-  showpools | tee -a $logfile
-}
-
-
 #########################
 # Main script starts here
 
-HOSTS=FS_SHOWCALLS_HOSTS
-OUTPUT_FILE=FS_SHOWCALLS_OUTPUT_FILE
-INTERVAL=FS_SHOWCALLS_INTERVAL
+HOSTS=$FS_SHOWCALLS_HOSTS
+OUTPUT_FILE=$FS_SHOWCALLS_OUTPUT_FILE
+INTERVAL=$FS_SHOWCALLS_INTERVAL
 
 while getopts 'h:i:o:?' c
 do
@@ -49,6 +42,5 @@ do
   printf "`date +"%Y-%m-%d %H:%M:%S"`,$RESULT\n" | tee -a $OUTPUT_FILE
   sleep $INTERVAL
 done
-
 
 
