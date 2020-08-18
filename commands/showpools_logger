@@ -43,6 +43,9 @@ done
 
 [ -z "$OUTPUT_FILE" ] && [ -z "$INVERVAL" ] && usage
 
+LOGDIR=`dirname $OUTPUT_FILE`
+mkdir -p $LOGDIR
+
 while true
 do
   show_pools | tee -a $OUTPUT_FILE
