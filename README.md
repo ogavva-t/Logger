@@ -1,1 +1,1 @@
-# Logger
+# Pgbouncer Logger
